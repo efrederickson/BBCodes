@@ -1,0 +1,5 @@
+﻿
+Add support for smileys & basic emoji
+Handle node arguments with spaces
+Advanced [img] bbcodes
+Remove last node by name, not last index

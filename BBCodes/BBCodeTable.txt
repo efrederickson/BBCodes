@@ -1,0 +1,53 @@
+﻿Implemented
+
+[b]
+[i]
+[u]
+[s]
+[url]
+[url={location}]
+[img]{url}[/img]
+[quote={name}]
+[quote]
+[code]
+
+Not Implemented:
+Font size   [size={number}]{text}[/size]    Changes the font-size of {text}
+Font colour [color={colour}]{text}[/color]  Changes the colour of {text}
+Center text [center]{text}[/center]       Centers {text} on screen
+
+Shows the image indicated by {url}
+Image (resized)
+Full version: [img width={width} height={height} ...]{url}[/img]
+Another variant (shorthand): [img={width}x{height}]{url}[/img]
+
+List
+Unordered list: [ul]{items}[/ul]
+Ordered list: [ol]{items}[/ol]
+Another variant: [list]{items}[/list]
+Displays a list of {items}
+List item
+[li]{text}[/li]
+Shorthand: [*]{text}\newline
+Species an {item} within a list
+
+Tables
+[table]{rows}[/table]
+Show a table with {rows} in it
+Tables example
+Table rows
+[tr]{cells}[/tr]
+Renders a table row containing {cells}
+Table rows example
+Table content cells
+Heading cell: [th]{content}[/th]
+Content cell: [td]{content}[/td]
+Shows {content} in a table (heading) cell
+Table content cells example
+Youtube videos
+[youtube]{id}[/youtube]
+Shows the youtube video indicated by {id}
+Youtube videos example
+Google videos
+[gvideo]{id}[/gvideo]
+Shows the google video indicated by {id}
