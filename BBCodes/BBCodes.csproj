@@ -43,7 +43,9 @@
     <Compile Include="BBCode.cs" />
     <Compile Include="Nodes\ListNode.cs" />
     <Compile Include="SmileyParser.cs" />
-    <Compile Include="Visitors\AST2BBCode.cs" />
+    <Compile Include="StringExtensions.cs" />
+    <Compile Include="Visitors\CodeGenerator.cs" />
+    <Compile Include="Visitors\IGenerator.cs" />
     <Compile Include="Visitors\XmlTreeGenerator.cs" />
     <None Include="TODO.txt" />
     <None Include="BBCodeTable.txt" />

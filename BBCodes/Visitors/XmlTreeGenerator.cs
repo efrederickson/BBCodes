@@ -13,7 +13,7 @@ namespace BBCodes.Visitors
     /// <summary>
     /// Creates an XML tree from a list of nodes
     /// </summary>
-    public class XmlTreeGenerator
+    public class XmlTreeGenerator : IGenerator
     {
         StringBuilder output = new StringBuilder();
         int indent = 0;

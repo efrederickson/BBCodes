@@ -25,25 +25,22 @@ namespace WinFormsTests
             // The InitializeComponent() call is required for Windows Forms designer support.
             //
             InitializeComponent();
-            
-            //
-            // TODO: Add constructor code after the InitializeComponent() call.
-            //
+            textBox1.Text = @"[img width=50 height=40]http://google.com/favicon.ico[/img]";
         }
         
         void Button1_Click(object sender, EventArgs e)
         {
             try
             {
+                BBCode.Strictness = ParseStrictness.IgnoreErrors;
                 webBrowser1.DocumentText = BBCode.Parse(textBox1.Text);
-                
                 
                 BBCodeParser bParser = new BBCodeParser(true);
                 bParser.Strictness = ParseStrictness.IgnoreErrors;
                 bParser.Parse(textBox1.Text);
-                textBox1.Text = new XmlTreeGenerator().Generate(bParser.Output);
-                //new BBCodes.Visitors.AST2BBCode().ToBBCode(bParser.Output);
-                
+                IGenerator gen = new BBCodes.Visitors.CodeGenerator();
+                //IGenerator gen = new XmlTreeGenerator().Generate(bParser.Output);
+                textBox1.Text = gen.Generate(bParser.Output);
             }
             catch (Exception ex)
             {

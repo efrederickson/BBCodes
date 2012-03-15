@@ -54,6 +54,8 @@ namespace BBCodes
         /// <param name="bbcode"></param>
         public void Parse(string bbcode)
         {
+            Output.Clear();
+            
             bool isInNode = false;
             bool isInList = false;
             StringReader sr = new StringReader(bbcode);
@@ -97,37 +99,94 @@ namespace BBCodes
                         //    nodes[index2 - 1].InnerNodes.Add(nodes[index2]);
                         //nodes.RemoveAt(index2);
                         
-                        isInNode = false;
+                        if (nIndex != -1 && nodes[nIndex] is ListNode)
+                            isInList = false;
                         if (nIndex == 0)
                             Output.Add(nodes[nIndex]);
                         else
                             nodes[nIndex - 1].InnerNodes.Add(nodes[nIndex]);
+                        
                         nodes.RemoveAt(nIndex--);
+                        if (nodes.Count == 0)
+                            isInNode = false;
                     }
                     else
                     {
                         // start a node
                         
+                        string fullNodeText = "";
                         string nodeName = "";
-                        string nodeArg = "";
+                        List<Tuple<string, string>> nodeArgs = new List<Tuple<string, string>>();
                         bool isInNodeName = true;
                         
+                        // read all the node text
                         while (true)
                         {
                             c = (char)sr.Read();
                             index++;
                             
-                            if (c == '=')
-                                isInNodeName = false;
-                            else if (c == ']')
+                            if (c == ']')
                                 break;
                             else
+                                fullNodeText += c;
+                            
+                        }
+                        // would be like [url=http://google.com] (1 arg)
+                        if (fullNodeText.CountOf('=') >= 1 && fullNodeText.Contains(" ") == false)
+                        {
+                            string nArg = "";
+                            foreach (char c2 in fullNodeText)
                             {
-                                if (isInNodeName)
-                                    nodeName += c;
+                                if (c2 == '=')
+                                    isInNodeName = false;
                                 else
-                                    nodeArg += c;
+                                {
+                                    if (isInNodeName)
+                                        nodeName += c2;
+                                    else
+                                        nArg += c2;
+                                }
                             }
+                            nodeArgs.Add(new Tuple<string, string>(nArg, nArg));
+                        } // would be like [img width=10 height=20]
+                        else if (fullNodeText.CountOf('=') > 1 && fullNodeText.Contains(" "))
+                        {
+                            nodeName = fullNodeText.Substring(0, fullNodeText.IndexOf(' ')).Trim();
+                            fullNodeText = fullNodeText.Substring(fullNodeText.IndexOf(' ')).Trim();
+                            isInNodeName = false;
+                            
+                            string arg = "", val = "";
+                            bool isInVal = false;
+                            foreach (char c2 in fullNodeText)
+                            {
+                                if (c2 == ' ')
+                                {
+                                    nodeArgs.Add(new Tuple<string, string>(arg, val));
+                                    arg = "";
+                                    val = "";
+                                    isInVal = false;
+                                }
+                                else if (isInVal)
+                                {
+                                    val += c2;
+                                }
+                                else
+                                {
+                                    // e.g. http://someurl.com/index.bbc?val=pie
+                                    if (c2 == '=' && isInVal)
+                                        val += c2;
+                                    else if (c2 == '=' && isInVal == false)
+                                        isInVal = true;
+                                    else
+                                        arg += c2;
+                                }
+                            }
+                            if (arg.Trim() != "" && val.Trim() != "")
+                                nodeArgs.Add(new Tuple<string, string>(arg, val));
+                        }
+                        else
+                        {
+                            nodeName = fullNodeText;
                         }
                         
                         Node n = CreateNodeFromName(nodeName);
@@ -136,27 +195,20 @@ namespace BBCodes
                         
                         if (isInList)
                         {
-                            if (nodes[nIndex].GetType() == typeof(ListNode) && n.GetType() == typeof(ListItemNode))
+                            if (nodes[nIndex] is ListItemNode && n is ListItemNode)
                             {
                                 Node n2 = FindLastNode(nodes, typeof(ListNode));
                                 int index2 = nodes.IndexOf(n2);
-                                nodes[index2].InnerNodes.Add(nodes[index2]);
-                                nodes.RemoveAt(index2);
+                                Node tmpNode = nodes[index2 + 1];
+                                nodes[index2].InnerNodes.Add(tmpNode);
+                                nodes.RemoveAt(index2 + 1);
+                                nIndex--;
                             }
                         }
                         
+                        n.Arguments.AddRange(nodeArgs);
                         nodes.Add(n);
                         nIndex++;
-                        
-                        if (string.IsNullOrEmpty(nodeArg.Trim()))
-                        {
-                            // ... do nothing
-                        }
-                        else
-                        {
-                            // TODO: advanced arguments such as [img height=10 width=20]
-                            nodes[nIndex].Arguments.Add(new Tuple<string, string>(nodeArg, nodeArg));
-                        }
                         isInNode = true;
                         if (n is ListNode)
                             isInList = true;
@@ -197,7 +249,7 @@ namespace BBCodes
                 }
             }
             // cuz indexes start at 0, it needs to be -1
-            if (nIndex != -1)
+            if (nodes.Count != 0)//(nIndex != -1)
             {
                 HandleError("Unterminated BBCode: " + nodes[0].GetType().Name);
                 foreach (Node n in nodes)
@@ -260,11 +312,12 @@ namespace BBCodes
         
         Node FindLastNode(List<Node> nodes, Type nodetype)
         {
-            nodes.Reverse();
-            foreach (Node n in nodes)
-                if (n.GetType() == nodetype)
+            for (int i = 0; i < nodes.Count; i++)//(Node n in nodes)
+            {
+                Node n = nodes[i];
+                if (n.GetType() == nodetype || n.GetType().IsSubclassOf(nodetype))
                     return n;
-            HandleError("Could not find node of type '" + nodetype.Name + "'");
+            }
             return null;
         }
         
@@ -280,7 +333,8 @@ namespace BBCodes
                     foreach (string nName in t.NodeNames)
                         if (nName.ToLower().Trim() == name.ToLower().Trim())
                             foundName = true;
-                    if (n.GetType() == nType && foundName)
+                    //if (n.GetType() == nType && foundName)
+                    if (foundName)
                         return n;
                 }
             }
@@ -304,7 +358,7 @@ namespace BBCodes
         
         /// <summary>
         /// Generates HTML for the parsed BBCode.
-        /// Doesn't add &lt;html&gt; or &lt;body&gt;
+        /// Doesn't add &lt;html&gt; or &lt;body&gt;...
         /// </summary>
         /// <returns></returns>
         public string ToHTML()

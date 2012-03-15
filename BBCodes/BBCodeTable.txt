@@ -10,6 +10,8 @@
 [quote={name}]
 [quote]
 [code]
+[list]/[ul]/[ol]
+[li]/[*]
 
 Not Implemented:
 Font size   [size={number}]{text}[/size]    Changes the font-size of {text}
@@ -20,16 +22,6 @@ Shows the image indicated by {url}
 Image (resized)
 Full version: [img width={width} height={height} ...]{url}[/img]
 Another variant (shorthand): [img={width}x{height}]{url}[/img]
-
-List
-Unordered list: [ul]{items}[/ul]
-Ordered list: [ol]{items}[/ol]
-Another variant: [list]{items}[/list]
-Displays a list of {items}
-List item
-[li]{text}[/li]
-Shorthand: [*]{text}\newline
-Species an {item} within a list
 
 Tables
 [table]{rows}[/table]

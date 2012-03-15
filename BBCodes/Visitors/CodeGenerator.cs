@@ -13,11 +13,11 @@ namespace BBCodes.Visitors
     /// <summary>
     /// Converts a list of nodes back into BBCode
     /// </summary>
-    public class AST2BBCode
+    public class CodeGenerator : IGenerator
     {
         StringBuilder Output = new StringBuilder();
         
-        public AST2BBCode()
+        public CodeGenerator()
         {
         }
         
@@ -53,7 +53,7 @@ namespace BBCodes.Visitors
             }
         }
         
-        public string ToBBCode(List<Node> nodes)
+        public string Generate(List<Node> nodes)
         {
             foreach (Node n in nodes)
             {
