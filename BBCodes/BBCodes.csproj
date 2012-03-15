@@ -30,23 +30,24 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
+    <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BBCode.cs" />
     <Compile Include="Nodes\ListNode.cs" />
+    <Compile Include="Nodes\TextColorNode.cs" />
+    <Compile Include="Nodes\TextSizeNode.cs" />
     <Compile Include="SmileyParser.cs" />
     <Compile Include="StringExtensions.cs" />
     <Compile Include="Visitors\CodeGenerator.cs" />
+    <Compile Include="Visitors\HTMLGenerator.cs" />
     <Compile Include="Visitors\IGenerator.cs" />
+    <Compile Include="Visitors\XMLGenerator.cs" />
     <Compile Include="Visitors\XmlTreeGenerator.cs" />
+    <Compile Include="BBCodeWebHandler.cs" />
+    <None Include="..\README.txt">
+      <Link>README.txt</Link>
+    </None>
     <None Include="TODO.txt" />
     <None Include="BBCodeTable.txt" />
     <Compile Include="Nodes\BNode.cs" />

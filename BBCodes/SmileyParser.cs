@@ -9,8 +9,9 @@ using System.Collections.Generic;
 namespace BBCodes
 {
     /// <summary>
-    /// Description of SmileyParser.
+    /// Replaces emoji faces with actual pictures...
     /// </summary>
+    [Serializable]
     public class SmileyParser
     {
         /// <summary>

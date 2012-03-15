@@ -7,22 +7,19 @@
 [url]
 [url={location}]
 [img]{url}[/img]
+[img width=X height=X]{url}[/img]
 [quote={name}]
 [quote]
 [code]
 [list]/[ul]/[ol]
 [li]/[*]
+[size={size}]
+[color={color}]
+[youtube]{id}[/youtube]
 
 Not Implemented:
-Font size   [size={number}]{text}[/size]    Changes the font-size of {text}
-Font colour [color={colour}]{text}[/color]  Changes the colour of {text}
-Center text [center]{text}[/center]       Centers {text} on screen
-
-Shows the image indicated by {url}
-Image (resized)
-Full version: [img width={width} height={height} ...]{url}[/img]
-Another variant (shorthand): [img={width}x{height}]{url}[/img]
-
+Center text [center]{text}[/center] Centers {text} on screen
+Image (shorthand): [img={width}x{height}]{url}[/img]
 Tables
 [table]{rows}[/table]
 Show a table with {rows} in it
@@ -30,16 +27,10 @@ Tables example
 Table rows
 [tr]{cells}[/tr]
 Renders a table row containing {cells}
-Table rows example
 Table content cells
 Heading cell: [th]{content}[/th]
 Content cell: [td]{content}[/td]
 Shows {content} in a table (heading) cell
-Table content cells example
-Youtube videos
-[youtube]{id}[/youtube]
-Shows the youtube video indicated by {id}
-Youtube videos example
 Google videos
 [gvideo]{id}[/gvideo]
 Shows the google video indicated by {id}

@@ -38,8 +38,9 @@ namespace WinFormsTests
                 BBCodeParser bParser = new BBCodeParser(true);
                 bParser.Strictness = ParseStrictness.IgnoreErrors;
                 bParser.Parse(textBox1.Text);
+                //IGenerator gen = new BBCodes.Visitors.XMLGenerator();
                 IGenerator gen = new BBCodes.Visitors.CodeGenerator();
-                //IGenerator gen = new XmlTreeGenerator().Generate(bParser.Output);
+                //IGenerator gen = new XmlTreeGenerator();
                 textBox1.Text = gen.Generate(bParser.Output);
             }
             catch (Exception ex)

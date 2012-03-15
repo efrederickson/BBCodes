@@ -1,2 +1,4 @@
-﻿Add support for smileys & basic emoji         
+﻿Add images for smileys & basic emoji
 Remove last node by name, not last index
+Use something besides <font> for color and size
+Wpf "scripting" support

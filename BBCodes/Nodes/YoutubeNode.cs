@@ -22,7 +22,9 @@ namespace BBCodes.Nodes
             foreach (Node n in this)
                 sb.Append(n.ToHTML());
             // TODO
-            return "<video>http://youtube.com/watch?v=" + sb.ToString() + "</video>";
+            //<iframe width="420" height="315" src="http://www.youtube.com/embed/QH2-TGUlwu4" frameborder="0" allowfullscreen></iframe>
+
+            return "<iframe width=\"420\" height=\"315\" src=\"http://youtube.com/embed/" + sb.ToString() + "\" frameborder=\"0\" allowfullscreen></iframe>";
         }
         
         public override string[] NodeNames {

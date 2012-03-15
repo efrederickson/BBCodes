@@ -12,6 +12,7 @@ namespace BBCodes.Nodes
     /// <summary>
     /// The BBCode base node
     /// </summary>
+    [Serializable]
     public abstract class Node : IEnumerable<Node>
     {
         /// <summary>

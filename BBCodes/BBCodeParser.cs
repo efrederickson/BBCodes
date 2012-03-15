@@ -4,7 +4,6 @@
  * Time: 3:24 PM
  */
 using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -15,6 +14,7 @@ namespace BBCodes
     /// <summary>
     /// The BBCode Parser
     /// </summary>
+    [Serializable]
     public class BBCodeParser
     {
         public readonly List<Node> Nodes = new List<Node>();
@@ -46,6 +46,8 @@ namespace BBCodes
             Nodes.Add(new OrderedListNode());
             Nodes.Add(new UnorderedListNode());
             Nodes.Add(new ListItemNode());
+            Nodes.Add(new TextSizeNode());
+            Nodes.Add(new TextColorNode());
         }
         
         /// <summary>
@@ -90,14 +92,16 @@ namespace BBCodes
                                 nName += c;
                             }
                         }
-                        //Node nToRemove = FindLastNodeFromName(nodes, nName);
-                        //int index2 = nodes.IndexOf(nToRemove);
-                        //isInNode = false;
-                        //if (index2 == 0)
-                        //    Output.Add(nodes[index2]);
-                        //else
-                        //    nodes[index2 - 1].InnerNodes.Add(nodes[index2]);
-                        //nodes.RemoveAt(index2);
+                        /*
+                        Node nToRemove = FindLastNodeFromName(nodes, nName);
+                        int index2 = nodes.IndexOf(nToRemove);
+                        if (index2 == 0)
+                            Output.Add(nodes[index2]);
+                        else
+                            nodes[index2 - 1].InnerNodes.Add(nodes[index2]);
+                        nodes.RemoveAt(index2);
+                        */
+                        
                         
                         if (nIndex != -1 && nodes[nIndex] is ListNode)
                             isInList = false;
@@ -105,8 +109,9 @@ namespace BBCodes
                             Output.Add(nodes[nIndex]);
                         else
                             nodes[nIndex - 1].InnerNodes.Add(nodes[nIndex]);
-                        
                         nodes.RemoveAt(nIndex--);
+                        
+                       
                         if (nodes.Count == 0)
                             isInNode = false;
                     }

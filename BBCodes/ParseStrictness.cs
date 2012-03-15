@@ -10,6 +10,7 @@ namespace BBCodes
     /// <summary>
     /// How the parser should handle errors
     /// </summary>
+    [Serializable]
     public enum ParseStrictness
     {
         /// <summary>
