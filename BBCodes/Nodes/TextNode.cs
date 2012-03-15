@@ -35,5 +35,11 @@ namespace BBCodes.Nodes
             return Text;
         }
         
+        public override string[] NodeNames {
+            get {
+                return new string[]  {""};
+            }
+        }
+        
     }
 }

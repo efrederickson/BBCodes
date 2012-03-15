@@ -27,5 +27,11 @@ namespace BBCodes.Nodes
             else
                 return "<blockquote>" + sb.ToString() + "</blockquote>";
         }
+        
+        public override string[] NodeNames {
+            get {
+                return new string[]  {"quote"};
+            }
+        }
     }
 }

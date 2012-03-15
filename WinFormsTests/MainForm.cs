@@ -10,6 +10,7 @@ using System.Text;
 using System.Windows.Forms;
 using BBCodes;
 using BBCodes.Nodes;
+using BBCodes.Visitors;
 
 namespace WinFormsTests
 {
@@ -34,13 +35,15 @@ namespace WinFormsTests
         {
             try
             {
-                BBCodeParser p = new BBCodeParser(true);
-                p.Strictness = ParseStrictness.IgnoreErrors;
-                p.Parse(textBox1.Text);
-                string t = p.ToHTML();
-                //foreach (Node n in p.Output)
-                //    t += GenTree(n);
-                webBrowser1.DocumentText = t;
+                webBrowser1.DocumentText = BBCode.Parse(textBox1.Text);
+                
+                
+                BBCodeParser bParser = new BBCodeParser(true);
+                bParser.Strictness = ParseStrictness.IgnoreErrors;
+                bParser.Parse(textBox1.Text);
+                textBox1.Text = new XmlTreeGenerator().Generate(bParser.Output);
+                //new BBCodes.Visitors.AST2BBCode().ToBBCode(bParser.Output);
+                
             }
             catch (Exception ex)
             {

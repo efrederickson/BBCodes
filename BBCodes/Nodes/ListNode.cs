@@ -12,8 +12,5 @@ namespace BBCodes.Nodes
     /// </summary>
     public abstract class ListNode : Node
     {
-        public ListNode()
-        {
-        }
     }
 }

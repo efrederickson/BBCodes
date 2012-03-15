@@ -26,5 +26,11 @@ namespace BBCodes.Nodes
             sb.Append("</ul>");
             return sb.ToString();
         }
+        
+        public override string[] NodeNames {
+            get {
+                return new string[]  {"ul", "list"};
+            }
+        }
     }
 }

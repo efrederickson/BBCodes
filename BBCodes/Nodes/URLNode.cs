@@ -29,5 +29,11 @@ namespace BBCodes.Nodes
             else
                 return "<a href=\"" + sb.ToString() + "\">" + sb.ToString() + "</a>";
         }
+        
+        public override string[] NodeNames {
+            get {
+                return new string[]  {"url", "link"};
+            }
+        }
     }
 }

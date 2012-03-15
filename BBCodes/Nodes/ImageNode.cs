@@ -8,7 +8,7 @@ using System;
 namespace BBCodes.Nodes
 {
     /// <summary>
-    /// Description of ImageNode.
+    /// The [img] node
     /// </summary>
     public class ImageNode : Node
     {
@@ -23,6 +23,12 @@ namespace BBCodes.Nodes
                 sb.Append(n.ToHTML());
             // basic IMG only
             return "<img src=\"" + sb.ToString() + "\" alt=\"IMAGE\" />";
+        }
+        
+        public override string[] NodeNames {
+            get {
+                return new string[]  {"img"};
+            }
         }
     }
 }

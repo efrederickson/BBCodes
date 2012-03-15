@@ -24,5 +24,11 @@ namespace BBCodes.Nodes
             // TODO
             return "<video>http://youtube.com/watch?v=" + sb.ToString() + "</video>";
         }
+        
+        public override string[] NodeNames {
+            get {
+                return new string[]  {"youtube"};
+            }
+        }
     }
 }

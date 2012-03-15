@@ -40,8 +40,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BBCode.cs" />
     <Compile Include="Nodes\ListNode.cs" />
     <Compile Include="SmileyParser.cs" />
+    <Compile Include="Visitors\AST2BBCode.cs" />
+    <Compile Include="Visitors\XmlTreeGenerator.cs" />
     <None Include="TODO.txt" />
     <None Include="BBCodeTable.txt" />
     <Compile Include="Nodes\BNode.cs" />
@@ -63,6 +66,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Visitors" />
     <Folder Include="Nodes" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />

@@ -24,5 +24,11 @@ namespace BBCodes.Nodes
                 sb.Append(n.ToHTML());
             return "<code>" + sb.ToString() + "</code>";
         }
+        
+        public override string[] NodeNames {
+            get {
+                return new string[]  {"code"};
+            }
+        }
     }
 }

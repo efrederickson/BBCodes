@@ -4,6 +4,7 @@
  * Time: 3:24 PM
  */
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -16,10 +17,10 @@ namespace BBCodes
     /// </summary>
     public class BBCodeParser
     {
-        public readonly List<Tuple<string, Node>> Nodes = new List<Tuple<string, Node>>();
+        public readonly List<Node> Nodes = new List<Node>();
         public List<Node> Output = new List<Node>();
         public ParseStrictness Strictness = ParseStrictness.ThrowErrors;
-        public bool InterpretEscapes = true;
+        public bool InterpretEscapes = false;
         int index = 0;
         
         public BBCodeParser()
@@ -33,20 +34,18 @@ namespace BBCodes
         /// <param name="generateDefaultTags"></param>
         public BBCodeParser(bool generateDefaultTags)
         {
-            Nodes.Add(new Tuple<string, Node>("b", new BNode()));
-            Nodes.Add(new Tuple<string, Node>("i", new INode()));
-            Nodes.Add(new Tuple<string, Node>("s", new SNode()));
-            Nodes.Add(new Tuple<string, Node>("u", new UNode()));
-            Nodes.Add(new Tuple<string, Node>("url", new URLNode()));
-            Nodes.Add(new Tuple<string, Node>("img", new ImageNode()));
-            Nodes.Add(new Tuple<string, Node>("quote", new QuoteNode()));
-            Nodes.Add(new Tuple<string, Node>("code", new CodeNode()));
-            Nodes.Add(new Tuple<string, Node>("youtube", new YoutubeNode()));
-            Nodes.Add(new Tuple<string, Node>("ol", new OrderedListNode()));
-            Nodes.Add(new Tuple<string, Node>("ul", new UnorderedListNode()));
-            Nodes.Add(new Tuple<string, Node>("list", new UnorderedListNode()));
-            Nodes.Add(new Tuple<string, Node>("*", new ListItemNode()));
-            Nodes.Add(new Tuple<string, Node>("li", new ListItemNode()));
+            Nodes.Add(new BNode());
+            Nodes.Add(new INode());
+            Nodes.Add(new SNode());
+            Nodes.Add(new UNode());
+            Nodes.Add(new URLNode());
+            Nodes.Add(new ImageNode());
+            Nodes.Add(new QuoteNode());
+            Nodes.Add(new CodeNode());
+            Nodes.Add(new YoutubeNode());
+            Nodes.Add(new OrderedListNode());
+            Nodes.Add(new UnorderedListNode());
+            Nodes.Add(new ListItemNode());
         }
         
         /// <summary>
@@ -137,7 +136,7 @@ namespace BBCodes
                         
                         if (isInList)
                         {
-                            if (nodes[nIndex].GetType() == typeof(ListItemNode) && n.GetType() == typeof(ListItemNode))
+                            if (nodes[nIndex].GetType() == typeof(ListNode) && n.GetType() == typeof(ListItemNode))
                             {
                                 Node n2 = FindLastNode(nodes, typeof(ListNode));
                                 int index2 = nodes.IndexOf(n2);
@@ -155,11 +154,11 @@ namespace BBCodes
                         }
                         else
                         {
-                            // TODO: such as height=10 width=20
+                            // TODO: advanced arguments such as [img height=10 width=20]
                             nodes[nIndex].Arguments.Add(new Tuple<string, string>(nodeArg, nodeArg));
                         }
                         isInNode = true;
-                        if (n.GetType() == typeof(ListNode))
+                        if (n is ListNode)
                             isInList = true;
                     }
                 }
@@ -243,12 +242,15 @@ namespace BBCodes
         {
             Node ret = null;
             
-            foreach (Tuple<string, Node> t in this.Nodes)
+            foreach (Node t in this.Nodes)
             {
-                if (t.Item1.ToLower() == nodeName.ToLower())
+                foreach (string nName in t.NodeNames)
                 {
-                    ret = (Node)t.Item2.GetType().GetConstructors()[0].Invoke(new object[0]);
-                    //new object[] { new string[] { arg }});
+                    if (nName.ToLower().Trim() == nodeName.ToLower().Trim())
+                    {
+                        ret = (Node)t.GetType().GetConstructors()[0].Invoke(new object[0]);
+                        //new object[] { new string[] { arg }});
+                    }
                 }
             }
             if (ret == null)
@@ -271,10 +273,14 @@ namespace BBCodes
             nodes.Reverse();
             foreach (Node n in nodes)
             {
-                foreach (Tuple<string, Node> t in Nodes)
+                foreach (Node t in Nodes)
                 {
-                    Type nType = t.Item2.GetType();
-                    if (n.GetType() == nType && t.Item1 == name)
+                    Type nType = t.GetType();
+                    bool foundName = false;
+                    foreach (string nName in t.NodeNames)
+                        if (nName.ToLower().Trim() == name.ToLower().Trim())
+                            foundName = true;
+                    if (n.GetType() == nType && foundName)
                         return n;
                 }
             }

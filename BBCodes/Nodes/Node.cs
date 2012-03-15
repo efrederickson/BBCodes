@@ -46,5 +46,10 @@ namespace BBCodes.Nodes
         {
             return InnerNodes.GetEnumerator();
         }
+        
+        public abstract string[] NodeNames
+        {
+            get;
+        }
     }
 }

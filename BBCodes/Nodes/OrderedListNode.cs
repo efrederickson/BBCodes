@@ -26,5 +26,11 @@ namespace BBCodes.Nodes
             sb.Append("</ol>");
             return sb.ToString();
         }
+        
+        public override string[] NodeNames {
+            get {
+                return new string[]  {"ol"};
+            }
+        }
     }
 }
