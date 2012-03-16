@@ -13,6 +13,7 @@ Features
  - Small
    - Only reference is on System.Web for the web handler
    - Compiled DLL is under 50 KB
+ - Conforms to the BBCode standards (from bbcode.org/reference.php)
  - more coming soon!
 
 

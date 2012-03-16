@@ -1,33 +1,32 @@
 ﻿/*
  * User: elijah
  * Date: 3/15/2012
- * Time: 2:48 PM
+ * Time: 4:33 PM
  */
 using System;
-using System.Text;
 
 namespace BBCodes.Nodes
 {
     /// <summary>
-    /// the [size=X] node
+    /// Description of EmailNode.
     /// </summary>
-    public class TextSizeNode : Node
+    public class EmailNode : Node
     {
-        public TextSizeNode()
+        public EmailNode()
         {
         }
         
         public override string ToHTML()
         {
-            StringBuilder sb = new StringBuilder();
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
             foreach (Node n in this)
                 sb.Append(n.ToHTML());
-            return "<span style=\"font-size:" + Arguments[0].Item1 + "px\">" + sb.ToString() + "</span>";
+            return "<a href=\"mailto:" + Arguments[0].Item1 + "\">" + sb.ToString() + "</a>";
         }
         
         public override string[] NodeNames {
             get {
-                return new string[] { "size" };
+                return new string[] { "email" };
             }
         }
     }

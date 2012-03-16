@@ -17,12 +17,15 @@ namespace BBCodes
     [Serializable]
     public class BBCodeParser
     {
-        public readonly List<Node> Nodes = new List<Node>();
+        public List<Node> Nodes = new List<Node>();
         public List<Node> Output = new List<Node>();
         public ParseStrictness Strictness = ParseStrictness.ThrowErrors;
-        public bool InterpretEscapes = false;
+        public bool InterpretEscapedCharacters = false;
         int index = 0;
         
+        /// <summary>
+        /// Creates a parser with no tags
+        /// </summary>
         public BBCodeParser()
         {
             
@@ -48,6 +51,15 @@ namespace BBCodes
             Nodes.Add(new ListItemNode());
             Nodes.Add(new TextSizeNode());
             Nodes.Add(new TextColorNode());
+            Nodes.Add(new CenterNode());
+            Nodes.Add(new TableNode());
+            Nodes.Add(new TableHeaderNode());
+            Nodes.Add(new TableCellNode());
+            Nodes.Add(new TableContentCellNode());
+            Nodes.Add(new GoogleVideoNode());
+            Nodes.Add(new EmailNode());
+            Nodes.Add(new SubscriptNode());
+            Nodes.Add(new SuperscriptNode());
         }
         
         /// <summary>
@@ -100,8 +112,12 @@ namespace BBCodes
                         else
                             nodes[index2 - 1].InnerNodes.Add(nodes[index2]);
                         nodes.RemoveAt(index2);
-                        */
-                        
+                         */
+                        if (nIndex == -1)
+                        {
+                            HandleError("End node '" + nName + "' found before any nodes were started");
+                            continue;
+                        }
                         
                         if (nIndex != -1 && nodes[nIndex] is ListNode)
                             isInList = false;
@@ -111,7 +127,7 @@ namespace BBCodes
                             nodes[nIndex - 1].InnerNodes.Add(nodes[nIndex]);
                         nodes.RemoveAt(nIndex--);
                         
-                       
+                        
                         if (nodes.Count == 0)
                             isInNode = false;
                     }
@@ -219,7 +235,7 @@ namespace BBCodes
                             isInList = true;
                     }
                 }
-                else if (c == '\\' && this.InterpretEscapes)
+                else if (c == '\\' && this.InterpretEscapedCharacters)
                 {
                     string s = Unescape(ref sr);
                     if (isInNode)
@@ -238,18 +254,25 @@ namespace BBCodes
                 }
                 else
                 {
+                    // text adding is now optimized to hold more than 1 char per TextNode.
                     if (isInNode)
                     {
                         if (nodes.Count <= nIndex || nodes[nIndex] == null)
                             continue;
                         // append to the text
-                        nodes[nIndex].InnerNodes.Add(new TextNode(c.ToString()));
+                        if (nodes[nIndex].InnerNodes.Count != 0 && nodes[nIndex].InnerNodes[nodes[nIndex].InnerNodes.Count - 1] is TextNode)
+                            (nodes[nIndex].InnerNodes[nodes[nIndex].InnerNodes.Count - 1] as TextNode).Text += c.ToString();
+                        else
+                            nodes[nIndex].InnerNodes.Add(new TextNode(c.ToString()));
                         
                     }
                     else
                     {
                         // add text node
-                        Output.Add(new TextNode() { Text = c.ToString() });
+                        if (Output.Count != 0 && Output[Output.Count - 1] is TextNode)
+                            (this.Output[Output.Count - 1] as TextNode).Text += c.ToString();
+                        else
+                            Output.Add(new TextNode() { Text = c.ToString() });
                     }
                 }
             }

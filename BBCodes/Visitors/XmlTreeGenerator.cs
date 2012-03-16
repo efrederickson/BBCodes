@@ -36,13 +36,13 @@ namespace BBCodes.Visitors
             }
             else
             {
-                indent++;
                 output.Append(Rep());
                 output.AppendLine("<" + n.GetType().Name + ">");
+                indent++;
                 foreach (Node n2 in n)
                     Visit(n2);
-                output.AppendLine(Rep() + "</" + n.GetType().Name + ">");
                 indent--;
+                output.AppendLine(Rep() + "</" + n.GetType().Name + ">");
             }
         }
         
@@ -57,9 +57,11 @@ namespace BBCodes.Visitors
         
         string Rep()
         {
+            if (indent == 0)
+                return "";
             string s = "";
             for (int i = 0; i < indent; i++)
-                s += " ";
+                s += "    ";
             return s;
         }
     }

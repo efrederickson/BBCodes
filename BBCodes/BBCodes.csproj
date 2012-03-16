@@ -34,7 +34,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BBCode.cs" />
+    <Compile Include="Nodes\CenterNode.cs" />
+    <Compile Include="Nodes\EmailNode.cs" />
+    <Compile Include="Nodes\GoogleVideoNode.cs" />
     <Compile Include="Nodes\ListNode.cs" />
+    <Compile Include="Nodes\SubscriptNode.cs" />
+    <Compile Include="Nodes\SuperscriptNode.cs" />
+    <Compile Include="Nodes\TableCellNode.cs" />
+    <Compile Include="Nodes\TableContentCellNode.cs" />
+    <Compile Include="Nodes\TableHeaderNode.cs" />
+    <Compile Include="Nodes\TableNode.cs" />
     <Compile Include="Nodes\TextColorNode.cs" />
     <Compile Include="Nodes\TextSizeNode.cs" />
     <Compile Include="SmileyParser.cs" />
@@ -48,8 +57,10 @@
     <None Include="..\README.txt">
       <Link>README.txt</Link>
     </None>
+    <None Include="docs\Teamoplis BBCode Reference Guide.htm" />
+    <None Include="docs\BBCode.org tags reference.htm" />
     <None Include="TODO.txt" />
-    <None Include="BBCodeTable.txt" />
+    <None Include="BBCodes.txt" />
     <Compile Include="Nodes\BNode.cs" />
     <Compile Include="Nodes\CodeNode.cs" />
     <Compile Include="Nodes\ImageNode.cs" />
@@ -69,6 +80,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="docs" />
     <Folder Include="Visitors" />
     <Folder Include="Nodes" />
   </ItemGroup>

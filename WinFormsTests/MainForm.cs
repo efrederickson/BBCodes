@@ -32,7 +32,7 @@ namespace WinFormsTests
         {
             try
             {
-                BBCode.Strictness = ParseStrictness.IgnoreErrors;
+                //BBCode.Strictness = ParseStrictness.IgnoreErrors;
                 webBrowser1.DocumentText = BBCode.Parse(textBox1.Text);
                 
                 BBCodeParser bParser = new BBCodeParser(true);

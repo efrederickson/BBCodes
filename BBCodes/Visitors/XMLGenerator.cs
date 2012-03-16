@@ -47,7 +47,7 @@ namespace BBCodes.Visitors
             
             if (n.InnerNodes.Count == 0)
             {
-                sb.Append(" />");
+                sb.AppendLine(" />");
             }
             else
             {

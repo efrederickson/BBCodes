@@ -1,7 +1,7 @@
 ﻿/*
  * User: elijah
  * Date: 3/15/2012
- * Time: 2:48 PM
+ * Time: 3:52 PM
  */
 using System;
 using System.Text;
@@ -9,11 +9,11 @@ using System.Text;
 namespace BBCodes.Nodes
 {
     /// <summary>
-    /// the [size=X] node
+    /// Description of TableNode.
     /// </summary>
-    public class TextSizeNode : Node
+    public class TableNode : Node
     {
-        public TextSizeNode()
+        public TableNode()
         {
         }
         
@@ -22,12 +22,12 @@ namespace BBCodes.Nodes
             StringBuilder sb = new StringBuilder();
             foreach (Node n in this)
                 sb.Append(n.ToHTML());
-            return "<span style=\"font-size:" + Arguments[0].Item1 + "px\">" + sb.ToString() + "</span>";
+            return "<table>" + sb.ToString() + "</table>";
         }
         
         public override string[] NodeNames {
             get {
-                return new string[] { "size" };
+                return new string[] { "table" };
             }
         }
     }

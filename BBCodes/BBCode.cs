@@ -38,15 +38,15 @@ namespace BBCodes
         /// <summary>
         /// Whether the BBCode Parser should interpret escapes or not
         /// </summary>
-        public static bool ParseEscapes
+        public static bool ParseEscapedCharacters
         {
             get
             {
-                return bParser.InterpretEscapes;
+                return bParser.InterpretEscapedCharacters;
             }
             set
             {
-                bParser.InterpretEscapes = value;
+                bParser.InterpretEscapedCharacters = value;
             }
         }
         

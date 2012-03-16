@@ -5,6 +5,7 @@
  */
 using System;
 using BBCodes;
+using BBCodes.Visitors;
 
 namespace ConsoleTests
 {
@@ -18,11 +19,18 @@ namespace ConsoleTests
                 string b = Console.ReadLine();
                 BBCodeParser p = new BBCodeParser(true);
                 p.Parse(b);
+                Console.WriteLine("HTML");
                 Console.WriteLine(p.ToHTML());
+                Console.WriteLine("BBCode");
+                Console.WriteLine(new CodeGenerator().Generate(p.Output));
+                Console.WriteLine("XML");
+                Console.WriteLine(new XMLGenerator().Generate(p.Output));
+                Console.WriteLine("XML Tree");
+                Console.WriteLine(new XmlTreeGenerator().Generate(p.Output));
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.ToString());
             }
             
             Console.Write("Press any key to continue . . . ");

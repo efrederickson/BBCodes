@@ -26,6 +26,11 @@ namespace BBCodes.Nodes
                 // basic IMG only
                 return "<img src=\"" + sb.ToString() + "\" alt=\"" + sb.ToString() + "\" />";
             }
+            else if (this.Arguments.Count == 1)
+            {
+                string[] dimensions = this.Arguments[0].Item1.Split('x');
+                return "<img src=\"" + sb.ToString() + "\" width=\"" + dimensions[0] + "\" height=\"" + dimensions[1] + "\" />";
+            }
             else
             {
                 string ret = "<img src=\"" + sb.ToString() + "\" ";

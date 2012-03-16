@@ -32,7 +32,7 @@ namespace BBCodes.Nodes
             //foreach (Node n in this)
             //    sb.Append(n.ToHTML());
             //return sb.ToString();
-            return Text;
+            return Text;//.Replace(" ", "&nbsp");
         }
         
         public override string[] NodeNames {
