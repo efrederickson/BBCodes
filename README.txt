@@ -29,4 +29,4 @@ Change the web.config to include the following within <system.web>:
 Then add a reference to the BBCodes.dll file,
 and finally write your BBCode page as a text file with a *.bbc or whatever extension you have specified
 
-Copyright (C) 2012 mlnlover11 Productions under the WTFPL license.
+Copyright (C) 2012 mlnlover11 Productions/LoDC under the WTFPL license.
