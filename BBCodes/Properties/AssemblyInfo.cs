@@ -12,9 +12,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("BBCodes")]
 [assembly: AssemblyDescription("An advanced BBCode library")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("mlnlover11 Productions")]
+[assembly: AssemblyCompany("LoDC")]
 [assembly: AssemblyProduct("BBCodes")]
-[assembly: AssemblyCopyright("Copyright (C) 2012 mlnlover11 Productions")]
+[assembly: AssemblyCopyright("Copyright (C) 2012 LoDC")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

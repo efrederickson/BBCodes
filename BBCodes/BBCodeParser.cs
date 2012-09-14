@@ -104,6 +104,12 @@ namespace BBCodes
                                 nName += c;
                             }
                         }
+                        bool found = false;
+                        foreach (string n in nodes[nodes.Count - 1].NodeNames)
+                            if (n.ToLower() == nName.ToLower())
+                                found = true;
+                        if (found == false)
+                            HandleError("Expected [/" + nodes[nodes.Count - 1].NodeNames[0] + "] not [/" + nName + "]");
                         /*
                         Node nToRemove = FindLastNodeFromName(nodes, nName);
                         int index2 = nodes.IndexOf(nToRemove);
