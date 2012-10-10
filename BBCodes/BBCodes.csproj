@@ -35,6 +35,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BBCode.cs" />
+    <Compile Include="NodeList.cs" />
     <Compile Include="Nodes\CenterNode.cs" />
     <Compile Include="Nodes\EmailNode.cs" />
     <Compile Include="Nodes\GoogleVideoNode.cs" />

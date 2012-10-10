@@ -17,16 +17,17 @@ namespace BBCodes
     [Serializable]
     public class BBCodeParser
     {
-        public List<Node> Nodes = new List<Node>();
+        public NodeList Nodes = new NodeList();
         public List<Node> Output = new List<Node>();
         public ParseStrictness Strictness = ParseStrictness.ThrowErrors;
         public bool InterpretEscapedCharacters = false;
         int index = 0;
         
         /// <summary>
-        /// Creates a parser with no tags
+        /// Creates a parser with default tags
         /// </summary>
         public BBCodeParser()
+            : this(true)
         {
             
         }
@@ -37,29 +38,32 @@ namespace BBCodes
         /// <param name="generateDefaultTags"></param>
         public BBCodeParser(bool generateDefaultTags)
         {
-            Nodes.Add(new BNode());
-            Nodes.Add(new INode());
-            Nodes.Add(new SNode());
-            Nodes.Add(new UNode());
-            Nodes.Add(new URLNode());
-            Nodes.Add(new ImageNode());
-            Nodes.Add(new QuoteNode());
-            Nodes.Add(new CodeNode());
-            Nodes.Add(new YoutubeNode());
-            Nodes.Add(new OrderedListNode());
-            Nodes.Add(new UnorderedListNode());
-            Nodes.Add(new ListItemNode());
-            Nodes.Add(new TextSizeNode());
-            Nodes.Add(new TextColorNode());
-            Nodes.Add(new CenterNode());
-            Nodes.Add(new TableNode());
-            Nodes.Add(new TableHeaderNode());
-            Nodes.Add(new TableCellNode());
-            Nodes.Add(new TableContentCellNode());
-            Nodes.Add(new GoogleVideoNode());
-            Nodes.Add(new EmailNode());
-            Nodes.Add(new SubscriptNode());
-            Nodes.Add(new SuperscriptNode());
+            if (generateDefaultTags)
+            {
+                Nodes.Add(new BNode());
+                Nodes.Add(new INode());
+                Nodes.Add(new SNode());
+                Nodes.Add(new UNode());
+                Nodes.Add(new URLNode());
+                Nodes.Add(new ImageNode());
+                Nodes.Add(new QuoteNode());
+                Nodes.Add(new CodeNode());
+                Nodes.Add(new YoutubeNode());
+                Nodes.Add(new OrderedListNode());
+                Nodes.Add(new UnorderedListNode());
+                Nodes.Add(new ListItemNode());
+                Nodes.Add(new TextSizeNode());
+                Nodes.Add(new TextColorNode());
+                Nodes.Add(new CenterNode());
+                Nodes.Add(new TableNode());
+                Nodes.Add(new TableHeaderNode());
+                Nodes.Add(new TableCellNode());
+                Nodes.Add(new TableContentCellNode());
+                Nodes.Add(new GoogleVideoNode());
+                Nodes.Add(new EmailNode());
+                Nodes.Add(new SubscriptNode());
+                Nodes.Add(new SuperscriptNode());
+            }
         }
         
         /// <summary>
@@ -149,6 +153,11 @@ namespace BBCodes
                         // read all the node text
                         while (true)
                         {
+                            if (sr.Peek() == -1)
+                            {
+                                HandleError("Unexpected End Of Stream");
+                                break;
+                            }
                             c = (char)sr.Read();
                             index++;
                             
@@ -328,7 +337,7 @@ namespace BBCodes
         {
             Node ret = null;
             
-            foreach (Node t in this.Nodes)
+            foreach (Node t in this.Nodes.Nodes)
             {
                 foreach (string nName in t.NodeNames)
                 {
@@ -360,7 +369,7 @@ namespace BBCodes
             nodes.Reverse();
             foreach (Node n in nodes)
             {
-                foreach (Node t in Nodes)
+                foreach (Node t in Nodes.Nodes)
                 {
                     Type nType = t.GetType();
                     bool foundName = false;

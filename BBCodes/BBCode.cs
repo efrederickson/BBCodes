@@ -79,7 +79,7 @@ namespace BBCodes
         /// </summary>
         /// <param name="nodeName"></param>
         /// <param name="n"></param>
-        public static void AddBBCodeNode(string nodeName, Node n)
+        public static void AddBBCodeNode<T>(T n) where T : Node, new() 
         {
             bParser.Nodes.Add(n);
         }
